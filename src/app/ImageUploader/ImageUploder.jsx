@@ -34,13 +34,13 @@ const ImageUploader =   () => {
                 console.log('Uploaded a blob or file!');
                 // console.log(snapshot);
                 // console.log(snapshot.metadata.bucket + snapshot.metadata.fullPath);
-                const fileImage = "https://"+ snapshot.metadata.bucket + "/" + snapshot.metadata.fullPath
+                // const fileImage = "https://"+ snapshot.metadata.bucket + "/" + snapshot.metadata.fullPath
                 // const fileImage2 = fileImage.getDownloadURL();
-                console.log(fileImage);
+                // console.log(fileImage);
 
                   getDownloadURL(ref(storage, `image/${file.name}`))
                 .then((url) => {
-                  console.log(url);
+                  // console.log(url);
                   setUrl(url);
                 })
                 // SetFileImage(fileImage);
