@@ -16,6 +16,7 @@ images : {
 },
 
 
+
     }
   
 
@@ -23,3 +24,6 @@ images : {
 
 
 module.exports = nextConfig
+
+
+

@@ -38,7 +38,7 @@ const ImageUploader =   () => {
                 // const fileImage2 = fileImage.getDownloadURL();
                 console.log(fileImage);
 
-                 getDownloadURL(ref(storage, `image/${file.name}`))
+                  getDownloadURL(ref(storage, `image/${file.name}`))
                 .then((url) => {
                   console.log(url);
                   setUrl(url);
@@ -69,7 +69,7 @@ const ImageUploader =   () => {
         
         
     
-    useEffect (() => {
+    useEffect ( () => {
       getDownloadURL(ref(storage, `image/licensed-image.jpeg`)).then((url) => {
         // console.log(url);
         setUrl(url);
