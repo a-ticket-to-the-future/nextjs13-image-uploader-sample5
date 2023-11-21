@@ -11,11 +11,11 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 
 
 
-const ImageUploader =  () => {
+const ImageUploader =   () => {
 
-    const [url , SetUrl] = useState("");
+    const [url , setUrl] =  useState("");
 
-    const OnFileUploadToFirebase = (e ) => {
+     const OnFileUploadToFirebase =  (e ) => {
         // console.log(e.target.files);
 //e.target.files[0].nameはnullの可能性があるのでif文を書いてみた
         // if(e.target.files === null){
@@ -28,7 +28,7 @@ const ImageUploader =  () => {
 
             // const blob: Blob = file.toBlob();
             
-            const storageRef = ref(storage , "image/" + file.name );//ここで.nameをつけるのが正解らしい
+            const storageRef =  ref(storage , "image/" + file.name );//ここで.nameをつけるのが正解らしい
 
             uploadBytes(storageRef, file).then((snapshot) => {
                 console.log('Uploaded a blob or file!');
@@ -38,10 +38,10 @@ const ImageUploader =  () => {
                 // const fileImage2 = fileImage.getDownloadURL();
                 console.log(fileImage);
 
-                getDownloadURL(ref(storage, `image/${file.name}`))
+                 getDownloadURL(ref(storage, `image/${file.name}`))
                 .then((url) => {
                   console.log(url);
-                  SetUrl(url);
+                  setUrl(url);
                 })
                 // SetFileImage(fileImage);
                 // const fileImage = storageRef.getDownloadURL();
@@ -69,7 +69,14 @@ const ImageUploader =  () => {
         
         
     
-    
+    useEffect (() => {
+      getDownloadURL(ref(storage, `image/licensed-image.jpeg`)).then((url) => {
+        // console.log(url);
+        setUrl(url);
+      }
+
+      )
+    },[]);
     
     
 
