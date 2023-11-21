@@ -23,7 +23,7 @@ const OnVideoUploadToFirebase = (e) => {
 
     getDownloadURL(ref(storage,`video/${file.name}`))
     .then((videoUrl) => {
-        console.log(videoUrl);
+        // console.log(videoUrl);
         setVideoUrl(videoUrl);
         
     }) 
