@@ -4,6 +4,7 @@ import { getDownloadURL, ref,listAll } from 'firebase/storage';
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import storage from "../firebase";
+import { setTimeout } from 'timers';
 
 
 
@@ -23,34 +24,69 @@ import storage from "../firebase";
 
 const ImageRandomView =  () => {
 
-    const [url , setUrl] = useState("");
+    const [randomUrl , setRandomUrl] = useState("");
 
     const getRandomImage = async () => {
 
-      const listRef = ref(storage, `image/`)
-      // console.log(listRef);
+      const urls = [];
 
-      // getDownloadURL(ref(storage, `image/`)).then((url) => {
-      //   console.log(url);
-       
-      // }
-
-      // )
-      listAll(listRef).then((res) => {
-        res.prefixes.forEach((folderRef) =>{
-          // console.log(folderRef);
-        });
+        listAll(ref(storage,"image/"))
+       .then((res) => {
         res.items.forEach((itemRef) => {
-          // console.log(itemRef);
+          getDownloadURL(itemRef).then((url)=>{
+            urls.push(url);
+            // console.log(url);
+            // console.log(urls);
+    
+            const randomIndex = Math.floor(Math.random() * urls.length);
+            // console.log(randomIndex);
+    
+            const randomUrl = urls[randomIndex];
+            // console.log(randomUrl);
+            setTimeout(() => {
+    
+              setRandomUrl(randomUrl);
+            },0);
+          });
+        });
 
-          getDownloadURL(ref(storage, itemRef)).then((url) => {
-              console.log(url);
-              setUrl(url);
-        })
+        
+      }
+      )
+      ;
+
+      
+      
+
+
+      // const listRef = ref(storage, `image/`)
+      
+      // listAll(listRef).then((res) => {
+      //   res.prefixes.forEach((folderRef) =>{
+      //     // console.log(folderRef);
+      //   });
+      //   res.items.forEach((itemRef) => {
+      //     // console.log(itemRef);
+
+          
+
+
+      //     getDownloadURL(ref(storage, itemRef)).then((urls) => {
+      //         // console.log(urls);
+
+
+              
+              
+      //         // const randomIndex = Math.floor(Math.random() * urls.length);
+      //         // console.log(randomIndex);
+      //         // const url = urls[randomIndex];
+      //         // console.log(url);
+      //         // setUrl(url);
+        // })
         
 
-      });
-    })
+      // });
+    // })
 
       // const files  = listAll();
       // console.log(listAll());
@@ -79,9 +115,9 @@ const ImageRandomView =  () => {
         
 
     useEffect ( () => {
-        getDownloadURL(ref(storage, `image/licensed-image.jpeg`)).then((url) => {
+        getDownloadURL(ref(storage, `image/licensed-image.jpeg`)).then((randomUrl) => {
           // console.log(url);
-          setUrl(url);
+          setRandomUrl(randomUrl);
         }
   
         )
@@ -100,7 +136,7 @@ const ImageRandomView =  () => {
             <button className=' my-2 ml-24 px-2 border border-blue-600 hover:scale-105 active:scale-95' onClick={getRandomImage} >
                 ランダム画像
             </button>
-            <Image src={url} alt='' width={300} height={300} className='mb-5' />
+            <Image src={randomUrl} alt='' width={300} height={300} className='mb-5' />
         </div>
     </div>
   );
