@@ -5,6 +5,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import storage from "../firebase";
 import { setTimeout } from 'timers';
+import Modal from 'react-modal';
 
 
 
@@ -25,34 +26,101 @@ import { setTimeout } from 'timers';
 const ImageRandomView =  () => {
 
     const [randomUrl , setRandomUrl] = useState("");
+    const [modalIsOpen,setModalIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState("");
+    const [imageUrls, setImageUrls] = useState([]);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+
+    
+}
+
+  const afterOpenModal = async () => {
+    const urls = [];
+
+    try{
+      const res = await listAll(ref(storage,"image/"));
+      for (const itemRef of res.items){
+        const url = await getDownloadURL(itemRef);
+        urls.push(url);
+        
+        setImageUrls(urls);
+       console.log(urls);
+      }
+  }catch(err){
+    console.error("Error fetching random image:" , error);
+  }
+
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  }
+
+  const handleImageClick =  (url) => {
+   setSelectedImage(url);
+    openModal();
+  }
+
+  const renderImages = () => {
+    return  imageUrls.map((url,index) => (
+      <div key={index}
+           onClick={() => handleImageClick(url)}
+           style={{width:'100px',height:'100px',margin:'5px'}}
+           className='my-5 flex w-fit'
+      >
+        <Image 
+          src={url}
+          alt={`Image ${index}`}
+          width={100}
+          height={100}
+        />
+      </div>
+    ));
+  }
+
+  
+
 
     const getRandomImage = async () => {
 
       const urls = [];
+      console.log(urls);
 
-        listAll(ref(storage,"image/"))
-       .then((res) => {
-        res.items.forEach((itemRef) => {
-          getDownloadURL(itemRef).then((url)=>{
-            urls.push(url);
-            // console.log(url);
-            // console.log(urls);
-    
-            const randomIndex = Math.floor(Math.random() * urls.length);
+      try{
+        const res = await listAll(ref(storage,"image/"));
+        for (const itemRef of res.items){
+          const url = await getDownloadURL(itemRef);
+          urls.push(url);
+          setImageUrls(urls);
+          console.log(urls);
+        }
+        const randomIndex = Math.floor(Math.random() * urls.length);
             // console.log(randomIndex);
     
             const randomUrl = urls[randomIndex];
-            // console.log(randomUrl);
-            setTimeout(() => {
+            setRandomUrl(randomUrl);
+      }catch(err){
+        console.error("Error fetching random image:" , error);
+      }
+        
+      //  .then((res) => {
+      //   res.items.forEach((itemRef) => {
+      //     getDownloadURL(itemRef).then((url)=>{
+      //       urls.push(url);
+            // console.log(url);
+            // console.log(urls);
     
-              setRandomUrl(randomUrl);
-            },0);
-          });
-        });
+            
+            // console.log(randomUrl);
+            
+          }
+        
 
         
-      }
-      )
+      
+      
       ;
 
       
@@ -110,7 +178,7 @@ const ImageRandomView =  () => {
         // }
         // )
 
-    };
+    
   
         
 
@@ -137,6 +205,29 @@ const ImageRandomView =  () => {
                 ランダム画像
             </button>
             <Image src={randomUrl} alt='' width={300} height={300} className='mb-5' />
+        </div>
+        <div>
+          <button className=' border border-blue-700 my-5 ml-24' onClick={openModal}>画像を表示</button>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            contentLabel="Image Modal"
+            >
+          <div className=' flex flex-col'>
+            <div className=' flex'>
+           {renderImages()}
+           </div>
+           <button onClick={closeModal}
+                   className='my-5 bg-red-600 border border-red-600 text-slate-50 rounded-md hover:scale-105 active:scale-95'
+           >
+            モーダルを閉じる
+            </button> 
+           <Image src={selectedImage} alt='' width={300} height={300}
+                  className='mb-5'
+                  />
+          </div>
+          </Modal>
         </div>
     </div>
   );
