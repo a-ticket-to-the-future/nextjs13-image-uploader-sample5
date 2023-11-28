@@ -30,9 +30,9 @@ const SignIn = () => {
         <div className='ml-28 mt-5'>ログイン中</div> : 
     <GoogleSignIn />}
     {user && <button onClick={handleSignOut}
-                     className=' ml-28 mt-5 my-5 border-4 border-red-600 bg-red-400 text-slate-50 rounded-md hover:scale-110 active:scale-95'
+                     className=' ml-24 mt-5 my-5 border-4 border-red-600 bg-red-400 text-slate-50 rounded-md hover:scale-110 active:scale-95'
              >
-                    SignOut
+                    GoogleSignOut
              </button>}
     </div>
   )
