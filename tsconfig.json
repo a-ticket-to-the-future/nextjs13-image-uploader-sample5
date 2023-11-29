@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/ImageUploader/page.js", "src/app/ImageUploader/ImageUploder.jsx", "src/app/ImageRandomView/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/ImageUploader/page.js", "src/app/ImageUploader/ImageUploader.jsx", "src/app/ImageRandomView/page.jsx"],
   "exclude": ["node_modules"]
 }
