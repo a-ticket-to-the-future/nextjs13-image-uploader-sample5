@@ -15,6 +15,7 @@ const SignIn = () => {
     const {user,signIn,signOut} = useAuth();
 
     const handleSignIn = async () => {
+        // console.log(user)
         await signIn();
     }
 
