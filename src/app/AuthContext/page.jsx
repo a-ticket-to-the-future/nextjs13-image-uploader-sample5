@@ -1,8 +1,9 @@
 "use client"
 
 import React, { createContext, useContext, useState } from 'react'
-import { auth, provider } from '../firebase';
-import { GoogleAuthProvider, signInWithPopup,signOut as signOutFromFirebase } from 'firebase/auth';
+import { auth, facebookProvider, provider } from '../firebase';
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithPopup,signOut as signOutFromFirebase } from 'firebase/auth';
+import { useSignInWithFacebook } from 'react-firebase-hooks/auth';
 
 
 const AuthContext = createContext();
@@ -32,6 +33,25 @@ export const AuthProvider = ({children}) => {
 
             console.log(error)
         })
+
+        
+            await signInWithPopup(auth,facebookProvider)
+            .then((result) => {
+                const credential = FacebookAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user =result.user;
+
+
+                setUser(user);
+            }).catch((error) => {
+                const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.email;
+            const credential = FacebookAuthProvider.credentialFromError(error);
+
+                console.log(error);
+            });
+        
         
     };
 
@@ -43,6 +63,9 @@ export const AuthProvider = ({children}) => {
     //         console.log(error);
     //     })
     // };
+
+
+
 
     const signOut = async () => {
         try {
