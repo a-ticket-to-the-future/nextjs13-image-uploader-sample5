@@ -5,7 +5,7 @@
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
 import "firebase/auth"
-import { EmailAuthProvider, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { EmailAuthCredential, EmailAuthProvider, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,11 +45,12 @@ const facebookProvider = new FacebookAuthProvider();
 const githubProvider = new GithubAuthProvider();
 // const provider = {googleprovider,facebookProvider}
 const emailProvider = new EmailAuthProvider();
+const credentialProvider = new EmailAuthCredential();
 
 
 
 
 
 export default storage  ;
-export {auth,provider,facebookProvider,githubProvider,emailProvider};
+export {auth,provider,facebookProvider,githubProvider,emailProvider,credentialProvider};
 // export {auth,authProvider};
