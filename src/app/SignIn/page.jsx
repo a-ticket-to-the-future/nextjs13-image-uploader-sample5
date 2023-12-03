@@ -1,12 +1,13 @@
 "use client"
 
 import React, { useContext } from 'react'
-import GoogleSignIn from "./GoogleSignIn/page";
+import GoogleSignIn from "./EmailSignUp/page";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth,provider} from "../firebase";
 import {useState} from "react";
 import {useAuth} from "../AuthContext/page";
 import { AuthProvider } from '../AuthContext/page';
+import EmailSignUp from './EmailSignUp/page';
 
 
 
@@ -47,6 +48,7 @@ if (!user) {
                 >
             GoogleSignIn
         </button>
+        <EmailSignUp />
     </div>
     );
 }else{
