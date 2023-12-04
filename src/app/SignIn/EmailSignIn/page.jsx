@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import  {getAuth, signInWithEmailAndPassword}from 'firebase/auth';
 import { auth } from '../../firebase';
+import App from '@/app/App/page';
 
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");
@@ -42,6 +43,9 @@ const EmailSignIn = () => {
       setUser(authUser);
       console.log(user);
       console.log(authUser);
+      console.log(authUser.uid)
+      
+      // if (authUser.uid)
       // ユーザーの処理を行う
     } catch (error) {
       console.log(error);
@@ -67,6 +71,12 @@ const EmailSignIn = () => {
           <button type='submit' className=' mx-5 my-2 px-5 border-2 border-green-600 bg-green-500 rounded-md text-slate-50 hover:scale-105 active:scale-95' onClick={FormEvent}>メールアドレスでログイン</button>
         </form>
       </div>
+      <div>
+     {user && (
+      <App />
+     )}
+     </div>
+      {/* <App uid={authUser} /> */}
     </div>
   );
 };
