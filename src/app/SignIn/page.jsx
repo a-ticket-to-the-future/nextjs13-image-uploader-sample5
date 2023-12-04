@@ -8,6 +8,7 @@ import {useState} from "react";
 import {useAuth} from "../AuthContext/page";
 import { AuthProvider } from '../AuthContext/page';
 import EmailSignUp from './EmailSignUp/page';
+import EmailSignIn from './EmailSignIn/page';
 
 
 
@@ -48,6 +49,7 @@ if (!user) {
                 >
             GoogleSignIn
         </button>
+        <EmailSignIn />
         <EmailSignUp />
     </div>
     );
