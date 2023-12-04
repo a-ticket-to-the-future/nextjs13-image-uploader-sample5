@@ -19,21 +19,21 @@
 //   }
 // }
 
-// // Firebaseの機能を使う
-// // 例えば、認証機能を使う場合は、以下のように書く
-// const auth = getAuth();
-// // authのメソッドを使って、ユーザーの管理や認証を行う
-// // 例えば、ユーザーを作成する場合は、以下のように書く
-// createUser(auth, {
-//   email: 'user@example.com',
-//   password: 'secretPassword',
-// })
-//   .then((userRecord) => {
-//     // ユーザーの作成に成功したら、何かしらの処理を行う
-//     // 例えば、作成されたユーザーの情報を表示する
-//     console.log('Successfully created new user:', userRecord.uid);
-//   })
-//   .catch((error) => {
-//     // ユーザーの作成に失敗したら、エラーメッセージを表示する
-//     console.log('Error creating new user:', error);
-//   });
+// // // Firebaseの機能を使う
+// // // 例えば、認証機能を使う場合は、以下のように書く
+// // const auth = getAuth();
+// // // authのメソッドを使って、ユーザーの管理や認証を行う
+// // // 例えば、ユーザーを作成する場合は、以下のように書く
+// // createUser(auth, {
+// //   email: 'user@example.com',
+// //   password: 'secretPassword',
+// // })
+// //   .then((userRecord) => {
+// //     // ユーザーの作成に成功したら、何かしらの処理を行う
+// //     // 例えば、作成されたユーザーの情報を表示する
+// //     console.log('Successfully created new user:', userRecord.uid);
+// //   })
+// //   .catch((error) => {
+// //     // ユーザーの作成に失敗したら、エラーメッセージを表示する
+// //     console.log('Error creating new user:', error);
+// //   });

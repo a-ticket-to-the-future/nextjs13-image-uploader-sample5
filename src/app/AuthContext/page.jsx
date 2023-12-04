@@ -43,8 +43,8 @@ export const AuthProvider = ({children}) => {
                 selectedAuthProvider = facebookProvider;
             } else if (selectedProvider === 'github') {
                 selectedAuthProvider = githubProvider;
-            // } else if (selectedProvider === 'email') {
-            //     selectedAuthProvider = emailProvider;
+            } else if (selectedProvider === 'email') {
+                selectedAuthProvider = emailProvider;
 
 
             //     const result = await signInWithEmailAndPassword(auth,email,password);
@@ -114,6 +114,7 @@ export const AuthProvider = ({children}) => {
                 const result = await signInWithPopup(auth,selectedAuthProvider);
                 const user = result.user;
                 setUser(user);
+                console.log(user);
             
 
            
@@ -141,30 +142,30 @@ export const AuthProvider = ({children}) => {
 
     
 
-    const handleChangeEmail = (e) => {
-                const inputEmail = e.target.value;
+    // const handleChangeEmail = (e) => {
+    //             const inputEmail = e.target.value;
         
-                setEmail(inputEmail);
-            };
+    //             setEmail(inputEmail);
+    //         };
         
-            const handleChangePassword = (e) => {
-                const inputPassword = e.target.value;
+    //         const handleChangePassword = (e) => {
+    //             const inputPassword = e.target.value;
         
-                setPassword(inputPassword);
-            };
+    //             setPassword(inputPassword);
+    //         };
 
-    const signInWithEmail = async (e) => {
-        e.preventDefault();
-        try{
-            const result = await signInWithEmailAndPassword(auth,email,password);
-            const authUser = result.user;
-            setUser(authUser);
+    // const signInWithEmail = async (e) => {
+    //     e.preventDefault();
+    //     try{
+    //         const result = await signInWithEmailAndPassword(auth,email,password);
+    //         const authUser = result.user;
+    //         setUser(authUser);
 
-        }catch(error){
-            console.log(error);
+    //     }catch(error){
+    //         console.log(error);
 
-        }
-    }
+    //     }
+    // }
     
 
     return (
