@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react'
 import { auth, credentialProvider, emailProvider, facebookProvider, githubProvider, provider } from '../firebase';
 import { EmailAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut as signOutFromFirebase } from 'firebase/auth';
 import { useSignInWithFacebook } from 'react-firebase-hooks/auth';
+import {EmailSignIn} from '../SignIn/EmailSignIn/page';
 
 const AuthContext = createContext();
 
@@ -18,23 +19,23 @@ export const AuthProvider = ({children}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const signInWithPopupProvider = async (selectedAuthProvider) => {
-        try{
-            const result = await signInWithPopup(auth,selectedAuthProvider);
-            const authUser = result.user;
-            // console.log(user);
-            setUser(authUser);
-        }catch(error) {
-            console.log(error);
-        }
-    }
+    // const signInWithPopupProvider = async (selectedAuthProvider) => {
+    //     try{
+    //         const result = await signInWithPopup(auth,selectedAuthProvider);
+    //         const authUser = result.user;
+    //         // console.log(user);
+    //         setUser(authUser);
+    //     }catch(error) {
+    //         console.log(error);
+    //     }
+    // }
 
     
 
     const signIn = async (selectedProvider,email,password) => {
-1       
+      
         
-        try {
+        // try {
             let selectedAuthProvider ;
             if (selectedProvider === 'google') {
                 selectedAuthProvider = provider;
@@ -42,17 +43,19 @@ export const AuthProvider = ({children}) => {
                 selectedAuthProvider = facebookProvider;
             } else if (selectedProvider === 'github') {
                 selectedAuthProvider = githubProvider;
-            } else if (selectedProvider === 'email') {
-                selectedAuthProvider = emailProvider;
+            // } else if (selectedProvider === 'email') {
+            //     selectedAuthProvider = emailProvider;
 
 
-                const result = await signInWithEmailAndPassword(auth,email,password);
-                const user = result.user;
-                setUser(user);
-                // user の uid を取得する
-                const id = user.uid;
-                // uid を state にセットする
-                setUid(id);
+            //     const result = await signInWithEmailAndPassword(auth,email,password);
+            //     const user = result.user;
+            //     setUser(user);
+            //     console.log(user);
+            //     // user の uid を取得する
+            //     const id = user.uid;
+            //     // uid を state にセットする
+            //     setUid(id);
+            //     console.log(id);
 
                 
 
@@ -87,20 +90,37 @@ export const AuthProvider = ({children}) => {
                 //     throw new Error("Please select a provider");
                 // }
             
-        }
+        
+
+
             //このif文消すと動かなくなるからけさないで！！
-                if(selectedAuthProvider){
-                    setAuthProvider(selectedAuthProvider);
-                    await signInWithPopupProvider(authProvider);
-                    console.log(authProvider);
+                // if(selectedAuthProvider){
+                //     setAuthProvider(selectedAuthProvider);
+                //     await signInWithPopupProvider(authProvider);
+                //     console.log(authProvider);
 
                     
                    
-                }
+                // }
+
+                
 
             
-        } catch (error) {
-            console.log(error);
+        }
+        
+        try{
+            if(selectedAuthProvider){
+
+                const result = await signInWithPopup(auth,selectedAuthProvider);
+                const user = result.user;
+                setUser(user);
+            
+
+           
+
+
+        }}catch (error) {
+            console.log('Error signing in:',error);
             // エラーハンドリングのコードを追加する
         }
 
@@ -119,19 +139,32 @@ export const AuthProvider = ({children}) => {
         }
     };
 
+    
+
     const handleChangeEmail = (e) => {
-        e.preventDefault();
                 const inputEmail = e.target.value;
         
                 setEmail(inputEmail);
             };
         
             const handleChangePassword = (e) => {
-                e.preventDefault();
                 const inputPassword = e.target.value;
         
                 setPassword(inputPassword);
             };
+
+    const signInWithEmail = async (e) => {
+        e.preventDefault();
+        try{
+            const result = await signInWithEmailAndPassword(auth,email,password);
+            const authUser = result.user;
+            setUser(authUser);
+
+        }catch(error){
+            console.log(error);
+
+        }
+    }
     
 
     return (
@@ -141,12 +174,9 @@ export const AuthProvider = ({children}) => {
                 <button className=' border-2 border-blue-600 mx-5 my-20 px-4 py-1 bg-blue-700 text-slate-50 rounded-md font-bold hover:scale-110 active:scale-95' onClick={() => signIn('facebook')}>Sign in wit FaceBook</button>
                 <button className=' border-2 border-blue-600 mx-5 my-20 px-4 py-1 bg-blue-700 text-slate-50 rounded-md font-bold hover:scale-110 active:scale-95' onClick={() => signIn('github')}>Sign in with GitHub</button>
                 <button className=' border-2 border-blue-600 mx-5 my-20 px-4 py-1 bg-blue-700 text-slate-50 rounded-md font-bold hover:scale-110 active:scale-95' onClick={() => signIn('email','email@example.com','password')}>Sign in with Email</button>
-            
-            <div className='  flex-col border-4 border-green-400 px-10'>
-                <form action="" onSubmit={(e) => {
-                    e.preventDefault();
-                    signIn('email',email,password);
-                }}>
+           
+            {/* <div className='  flex-col border-4 border-green-400 px-10'>
+                <form action="" onSubmit={signInWithEmail}>
                     <div className=' mx-5 my-2'>
                         <label htmlFor="email">メールアドレス</label>
                         <input type="email" id='email' value={email} onChange={handleChangeEmail} required className=' border-2 border-gray-400 bg-slate-50'/>
@@ -161,7 +191,7 @@ export const AuthProvider = ({children}) => {
                     
                 </div>
                 
-            </div>
+            </div> */}
             </div>
             <div className='ml-80'>
                 <button className='border-2 border-red-600 mx-5 my-20 px-4 py-1 bg-red-700 text-slate-50 rounded-md font-bold hover:scale-110 active:scale-95'>
