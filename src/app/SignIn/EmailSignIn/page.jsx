@@ -79,6 +79,7 @@ const EmailSignIn = () => {
       <div className='  ml-0 mr-96 mt-10 pr-0'>
         {/* 他のサインインボタン */}
       </div>
+      {!user && 
       <div className='  flex-col border-4 border-green-400 pr-80'>
         <form action="" onSubmit={FormEvent}>
           <div className=' mx-5 my-2'>
@@ -92,6 +93,7 @@ const EmailSignIn = () => {
           <button type='submit' className=' mx-5 my-2 px-5 border-2 border-green-600 bg-green-500 rounded-md text-slate-50 hover:scale-105 active:scale-95' onClick={FormEvent}>メールアドレスでログイン</button>
         </form>
       </div>
+      }
       <div>
      {user && (
       <div>
