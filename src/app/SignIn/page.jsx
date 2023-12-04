@@ -41,10 +41,10 @@ const SignIn = () => {
 if (!user) {
 
     return(
-    <div className=' ml-80 pl-60'>
-        <div className='ml-10 mt-5'>ログインしていません</div>
+    <div className=' ml-10'>
+        <div className='ml-80 mt-5'>ログインしていません</div>
         <button 
-                className=' ml-14 border-4 border-green-600 bg-green-400 text-slate-50 rounded-md hover:scale-110 active:scale-95'
+                className=' ml-80 border-4 border-green-600 bg-green-400 text-slate-50 rounded-md hover:scale-110 active:scale-95'
                 onClick={handleSignIn}
                 >
             GoogleSignIn

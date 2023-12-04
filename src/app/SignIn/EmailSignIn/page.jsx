@@ -4,11 +4,16 @@ import React, { useState } from 'react';
 import  {getAuth, signInWithEmailAndPassword}from 'firebase/auth';
 import { auth } from '../../firebase';
 import App from '@/app/App/page';
+import SignInView from '@/app/App/SignInView/page';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/AuthContext/page';
 
 const EmailSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user , setUser] = useState(undefined);
+
+  const route = useRouter();
   
 
   const handleChangeEmail = (e) => {
@@ -44,6 +49,8 @@ const EmailSignIn = () => {
       console.log(user);
       console.log(authUser);
       console.log(authUser.uid)
+
+      
       
       // if (authUser.uid)
       // ユーザーの処理を行う
@@ -53,12 +60,26 @@ const EmailSignIn = () => {
     }
   };
 
+  const {signIn,signOut} = useAuth();
+
+    const handleSignOut = async () => {
+        await signOut().then(() => {
+            console.log(user);
+             setUser(null);
+            // route.push("/");
+        })
+        
+        // setSignInUser(null);
+        // user = signInUser;
+        // console.log(handleSignOut);
+    }; 
+
   return (
-    <div>
-      <div className=' ml-0 mr-96 mt-10 pr-0'>
+    <div className='mr-96'>
+      <div className='  ml-0 mr-96 mt-10 pr-0'>
         {/* 他のサインインボタン */}
       </div>
-      <div className='  flex-col border-4 border-green-400 px-0'>
+      <div className='  flex-col border-4 border-green-400 pr-80'>
         <form action="" onSubmit={FormEvent}>
           <div className=' mx-5 my-2'>
             <label htmlFor="email">メールアドレス</label>
@@ -73,7 +94,13 @@ const EmailSignIn = () => {
       </div>
       <div>
      {user && (
-      <App />
+      <div>
+      <SignInView/>
+      <button onClick={handleSignOut}
+                     className=' ml-24 mt-5 my-5 border-4 border-red-600 bg-red-400 text-slate-50 rounded-md hover:scale-110 active:scale-95' >
+            サインアウト
+      </button>
+      </div>
      )}
      </div>
       {/* <App uid={authUser} /> */}

@@ -8,6 +8,7 @@ import SignIn from "../SignIn/page";
 import { AuthProvider, useAuth } from '../AuthContext/page';
 import { auth } from '../firebase';
 import { useState } from 'react';
+import SignInView from "./SignInView/page";
 
 export default function App() {
 
@@ -31,15 +32,16 @@ export default function App() {
     <div>
         <SignIn />
         {user  &&   (
-          <div>
-            <div>
-              <ImageUploader />
-              <ImageRandomView />
-            </div>
-            <div>
-              <VideoUploader />
-            </div>
-          </div>
+          // <div>
+          //   <div>
+          //     <ImageUploader />
+          //     <ImageRandomView />
+          //   </div>
+          //   <div>
+          //     <VideoUploader />
+          //   </div>
+          // </div>
+          <SignInView />
         )}
     </div>
   );
