@@ -18,6 +18,7 @@ export const AuthProvider = ({children}) => {
     const  [uid , setUID] = useState(null);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [authUser ,setAuthUser] = useState(undefined);
 
     // const signInWithPopupProvider = async (selectedAuthProvider) => {
     //     try{
@@ -204,7 +205,7 @@ export const AuthProvider = ({children}) => {
             
 
 
-        <AuthContext.Provider value={{user, signIn , signOut}}>
+        <AuthContext.Provider value={{user, signIn , signOut,authUser,setAuthUser}}>
             {children}
         </AuthContext.Provider>
         </div>
