@@ -4,6 +4,7 @@
 
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
+import {getFirestore} from 'firebase/firestore';
 import "firebase/auth"
 import { EmailAuthCredential, EmailAuthProvider, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -39,6 +40,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -52,5 +54,5 @@ const credentialProvider = new EmailAuthCredential();
 
 
 export default storage  ;
-export {auth,provider,facebookProvider,githubProvider,emailProvider,credentialProvider};
+export {auth,provider,facebookProvider,githubProvider,emailProvider,credentialProvider,db};
 // export {auth,authProvider};
