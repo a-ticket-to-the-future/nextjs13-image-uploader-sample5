@@ -4,7 +4,7 @@
 
 import { initializeApp } from "firebase/app";
 import {getStorage} from "firebase/storage";
-import {getFirestore} from 'firebase/firestore';
+import {Firestore, getFirestore} from 'firebase/firestore';
 import "firebase/auth"
 import { EmailAuthCredential, EmailAuthProvider, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -12,6 +12,7 @@ import { EmailAuthCredential, EmailAuthProvider, FacebookAuthProvider, GithubAut
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+//2023年12月初旬にテストモードの期限が切れる方
 const firebaseConfig = {
 
     apiKey: "AIzaSyCdyqGxWMmNF4AmVjFB-XwHpM9ubGVUT58",
@@ -28,6 +29,17 @@ const firebaseConfig = {
     // messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     // appId: process.env.FIREBASE_APP_ID,
 
+  //   //2023年12月から使い出したテストモードの方
+  //   apiKey: "AIzaSyDR7mLEEeEpJHxNRqBvv8PpOa7IbbiR1UM",
+  // authDomain: "nextjs13-imageuploader-sample5.firebaseapp.com",
+  // projectId: "nextjs13-imageuploader-sample5",
+  // storageBucket: "nextjs13-imageuploader-sample5.appspot.com",
+  // messagingSenderId: "665717399228",
+  // appId: "1:665717399228:web:30990f43935d7c166cfab9"
+
+
+
+
     
 };
 
@@ -41,6 +53,8 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+// const db = Firestore(app); 
+
 
 const provider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();

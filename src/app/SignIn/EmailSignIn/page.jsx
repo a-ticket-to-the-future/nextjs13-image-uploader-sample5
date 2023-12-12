@@ -1,18 +1,22 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import  {getAuth, signInWithEmailAndPassword}from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import App from '@/app/App/page';
 import SignInView from '@/app/App/SignInView/page';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/AuthContext/page';
+import SignInUserView from '../../SignInUserView/page';
+import { addDoc, collection } from 'firebase/firestore';
+// import bcrypt from "bcrypt";
+
 
 const EmailSignIn = () => {
+  const [signInUser , setSignInUser] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user , setUser] = useState(undefined);
-
+  
   const route = useRouter();
   
 
@@ -44,28 +48,101 @@ const EmailSignIn = () => {
       // })
       
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const authUser = userCredential.user
-      setUser(authUser);
-      console.log(user);
+      const authUser = userCredential.user;
+      setSignInUser(authUser);
+      // console.log(setUser);
+      // console.log(signInUser);
       console.log(authUser);
       console.log(authUser.uid)
 
+      //  route.refresh();
+
+      // useEffect( async() => {
+      //     if(authUser){
       
-      
-      // if (authUser.uid)
-      // ユーザーの処理を行う
-    } catch (error) {
-      console.log(error);
-      // エラーハンドリングのコードを追加する
+          const saveSignInUserData = async () => {
+            const dogRef = await addDoc(collection(db,"users"),{
+              displayName: authUser.uid,
+              email: authUser.email,
+              // hashedPassword:await bcrypt.hash(password,10),
+              // password: authUser.passwordHash,
+            });
+            // const authUserData = {
+            //   displayName: authUser.uid,
+            //   email: authUser.email,
+            //   password: auth().currentUser.passwordHash,
+            // };
+            // console.log(authUserData);
+            // await db.collection("users").doc(authUser.uid).set(authUserData);
+            // console.log(saveSignInUserData);
+            console.log("Document written with ID",dogRef.id)
+          };
+      //     await saveSignInUserData();
+
+      //       // const res = auth().currentUser;
+      //       // console.log(res);
+      //       // setSignInUser(res);
+
+      //       // saveSignInUserData();
+            
+      //       }
+  
+      //     },[authUser]);
+    
+    if(authUser.uid){
+      await saveSignInUserData();
     }
+      
+      
+             
+               // if (authUser.uid)
+               // ユーザーの処理を行う
+             } catch (error) {
+               console.log(error);
+               // エラーハンドリングのコードを追加する
+             }
+            //  useEffect(async() => {
+            //   if(signInUser){
+          
+            //   const saveSignInUserData = async () => {
+            //     const dogRef = await addDoc(collection(db,"users"),{
+            //       displayName: signInUser.uid,
+            //       email: signInUser.email,
+            //       password: signInUser.passwordHash,
+            //     });
+            //     // const authUserData = {
+            //     //   displayName: authUser.uid,
+            //     //   email: authUser.email,
+            //     //   password: auth().currentUser.passwordHash,
+            //     // };
+            //     // console.log(authUserData);
+            //     // await db.collection("users").doc(authUser.uid).set(authUserData);
+            //     // console.log(saveSignInUserData);
+            //     console.log("Document written with ID",dogRef.id)
+            //   };
+              
+            //   // const res = auth().currentUser;
+            //   // console.log(res);
+            //   // setSignInUser(res);
+              
+            //   // saveSignInUserData();
+              
+            //   await saveSignInUserData();
+            //     }
+          
+            //   },[signInUser]);
   };
+
+  
+
+  // console.log(signInUser);
 
   const {signIn,signOut} = useAuth();
 
     const handleSignOut = async () => {
         await signOut().then(() => {
-            console.log(user);
-             setUser(null);
+            console.log(signInUser);
+             setSignInUser(null);
             // route.push("/");
         })
         
@@ -79,7 +156,7 @@ const EmailSignIn = () => {
       <div className='  ml-0 mr-96 mt-10 pr-0'>
         {/* 他のサインインボタン */}
       </div>
-      {!user && 
+      {!signInUser && 
       <div className='  flex-col border-4 border-green-400 pr-80'>
         <form action="" onSubmit={FormEvent}>
           <div className=' mx-5 my-2'>
@@ -95,8 +172,16 @@ const EmailSignIn = () => {
       </div>
       }
       <div>
-     {user && (
+     {signInUser && (
+     
       <div>
+        
+        {/* <SignInUserView /> */}
+        <div>
+       <div>ようこそ、{signInUser.uid}さん</div>
+       {/* {console.log(signInUser)} */}
+       {/* {console.log(res)} */}
+    </div>
       <SignInView/>
       <button onClick={handleSignOut}
                      className=' ml-24 mt-5 my-5 border-4 border-red-600 bg-red-400 text-slate-50 rounded-md hover:scale-110 active:scale-95' >
