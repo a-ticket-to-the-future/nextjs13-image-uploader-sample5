@@ -9,7 +9,9 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/app/AuthContext/page';
 import SignInUserView from '../../SignInUserView/page';
 import { addDoc, collection } from 'firebase/firestore';
+import Link from 'next/link';
 // import bcrypt from "bcrypt";
+// import SignInUserData from "./SignInUserData/page"
 
 
 const EmailSignIn = () => {
@@ -60,38 +62,22 @@ const EmailSignIn = () => {
       // useEffect( async() => {
       //     if(authUser){
       
-          const saveSignInUserData = async () => {
-            const dogRef = await addDoc(collection(db,"users"),{
-              displayName: authUser.uid,
-              email: authUser.email,
-              // hashedPassword:await bcrypt.hash(password,10),
-              // password: authUser.passwordHash,
-            });
-            // const authUserData = {
-            //   displayName: authUser.uid,
-            //   email: authUser.email,
-            //   password: auth().currentUser.passwordHash,
-            // };
-            // console.log(authUserData);
-            // await db.collection("users").doc(authUser.uid).set(authUserData);
-            // console.log(saveSignInUserData);
-            console.log("Document written with ID",dogRef.id)
-          };
-      //     await saveSignInUserData();
 
-      //       // const res = auth().currentUser;
-      //       // console.log(res);
-      //       // setSignInUser(res);
-
-      //       // saveSignInUserData();
+      //ログインするたびに追加してしまうため、一旦コメントアウト
+    //       const saveSignInUserData = async () => {
+    //         const dogRef = await addDoc(collection(db,"users"),{
+    //           displayName: authUser.uid,
+    //           email: authUser.email,
+              
+    //         });
             
-      //       }
-  
-      //     },[authUser]);
+    //         console.log("Document written with ID",dogRef.id)
+    //       };
+     
     
-    if(authUser.uid){
-      await saveSignInUserData();
-    }
+    // if(authUser.uid){
+    //   await saveSignInUserData();
+    // }
       
       
              
@@ -144,6 +130,8 @@ const EmailSignIn = () => {
             console.log(signInUser);
              setSignInUser(null);
             // route.push("/");
+            setEmail("");
+            setPassword("");
         })
         
         // setSignInUser(null);
@@ -181,6 +169,11 @@ const EmailSignIn = () => {
        <div>ようこそ、{signInUser.uid}さん</div>
        {/* {console.log(signInUser)} */}
        {/* {console.log(res)} */}
+       <div>
+          <button className=' mx-5 my-3 px-5 py-2 bg-blue-300 text-slate-50 border-2 border-blue-700 font-bold rounded-lg hover:scale-105 active:scale-95'>
+            <Link href={"/SignIn/EmailSignIn/SignInUserData"}>ユーザー情報の編集</Link>
+          </button>
+       </div>
     </div>
       <SignInView/>
       <button onClick={handleSignOut}
