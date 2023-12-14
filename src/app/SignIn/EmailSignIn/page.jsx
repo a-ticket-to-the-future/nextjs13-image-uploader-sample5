@@ -61,10 +61,39 @@ const EmailSignIn = () => {
 
       // useEffect( async() => {
       //     if(authUser){
+
+
+      const saveSignInUserData = async () => {
+        const dogRef = await collection(db,"users").where({
+          displayName: authUser.uid,
+          email: authUser.email,
+          uid:authUser.uid,
+        }).get();
+
+        if(dogRef.docs.length > 0){
+          return;
+        } else {
+
+          await addDoc(collection(db,"users"),{
+                      displayName: authUser.uid,
+                      email: authUser.email,
+                      
+                    });
+
+                    console.log("Document written with ID",dogRef.id)
+        }
+        
+      };
+ 
+
+if(authUser.uid){
+  await saveSignInUserData();
+}
       
 
       //ログインするたびに追加してしまうため、一旦コメントアウト
-    //       const saveSignInUserData = async () => {
+          
+    //   const saveSignInUserData = async () => {
     //         const dogRef = await addDoc(collection(db,"users"),{
     //           displayName: authUser.uid,
     //           email: authUser.email,

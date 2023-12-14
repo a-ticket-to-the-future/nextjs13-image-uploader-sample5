@@ -1,9 +1,16 @@
+"use client"
+
 import { db } from '../../../firebase';
-import React from 'react'
-import { collection, getDoc, getDocs, query,doc, where } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
+import { collection, getDoc, getDocs, query,doc, where, limit } from 'firebase/firestore';
+import Link from 'next/link';
 
 const SignInUserData = async () => {
 
+    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    
     // const usersRef = collection(db,"users");
     // console.log(usersRef);
 
@@ -16,10 +23,18 @@ const SignInUserData = async () => {
     querySnapshot.forEach((doc) => {
         users.push(doc.data());
         console.log(doc.id, "=>",doc.data());
+
+
+        // useEffect(() => {
+        //     const token = localStorage.getItem('token');
+        //     if (token) {
+        //       setIsLoggedIn(true);
+        //     }
+        //   }, []);
     })
 
-
-    console.log(users);
+    
+    // console.log(users);
 
   return (
     <div className=' flex  bg-slate-400 h-[400px] w-3/4 justify-center ml-40 mt-10 '>
@@ -35,7 +50,13 @@ const SignInUserData = async () => {
                 ))}
             </div>
         </div>
+        <div>
+          <button className=' mx-5 my-3 px-5 py-2 mt-10 bg-blue-300 text-slate-50 border-2 border-blue-700 font-bold rounded-lg hover:scale-105 active:scale-95'>
+          <Link href="/" state={ isLoggedIn} onclick = {() => setIsLoggedIn(true) }  >戻る</Link>
+          </button>
+       </div>
     </div>
+    
     </div>
   )
 }
