@@ -4,6 +4,7 @@ import { db } from '../../../firebase';
 import React, { useEffect, useState } from 'react'
 import { collection, getDoc, getDocs, query,doc, where, limit } from 'firebase/firestore';
 import Link from 'next/link';
+import AddFields from './AddFields/page';
 
 const SignInUserData = async () => {
 
@@ -33,15 +34,17 @@ const SignInUserData = async () => {
         //   }, []);
     })
 
+   
     
     // console.log(users);
 
   return (
-    <div className=' flex  bg-slate-400 h-[400px] w-3/4 justify-center ml-40 mt-10 '>
-    <div className=' w-[1000px] bg-yellow-200 text-slate-400 text-3xl my-4 '>
+    <div className='flex'>
+    <div className=' flex  bg-slate-400 h-[400px] w-[800px] justify-center ml-5 mt-10 '>
+    <div className=' w-[750px] bg-yellow-200 text-slate-400 text-3xl my-4 '>
         <div className=' justify-items-center'>
                 現在のユーザー情報
-            <div className=' flex flex-wrap bg-slate-50 my-1 ml-24 w-[800px] h-[320px]'>
+            <div className=' flex flex-wrap bg-slate-50 my-1 ml-4 w-[720px] h-[320px]'>
                 {users.map((user) => (
                     <div className='  border-2 border-orange-400 text-xs my-1 ml-1 pl-2 w-[230px] h-[40px]'>
                         <div key={user.id}>{user.displayName}</div>
@@ -57,6 +60,10 @@ const SignInUserData = async () => {
        </div>
     </div>
     
+    </div>
+        <div>
+            <AddFields />
+        </div>
     </div>
   )
 }
